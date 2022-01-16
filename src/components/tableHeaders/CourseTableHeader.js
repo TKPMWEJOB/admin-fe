@@ -5,7 +5,7 @@ const headers = [
     {
         field: 'name', headerName: "Course name", width: "300",
         renderCell: (params) => (
-            <Tooltip title={params.value} >
+            <Tooltip title={params.value? params.value : ''} >
                 <span className="table-cell-trucate">{params.value}</span>
             </Tooltip>
         ),
@@ -13,7 +13,7 @@ const headers = [
     {
         field: 'room',
         renderCell: (params) => (
-            <Tooltip title={params.value} >
+            <Tooltip title={params.value? params.value : ''} >
                 <span className="table-cell-trucate">{params.value}</span>
             </Tooltip>
         ),
@@ -21,7 +21,7 @@ const headers = [
     {
         field: 'section',
         renderCell: (params) => (
-            <Tooltip title={params.value} >
+            <Tooltip title={params.value? params.value : ''} >
                 <span className="table-cell-trucate">{params.value}</span>
             </Tooltip>
         ),
@@ -29,7 +29,7 @@ const headers = [
     {
         field: 'username', width: "120",
         renderCell: (params) => (
-            <Tooltip title={params.value} >
+            <Tooltip title={params.value? params.value : ''} >
                 <span className="table-cell-trucate">{params.value}</span>
             </Tooltip>
         ),
@@ -37,7 +37,7 @@ const headers = [
     {
         field: 'owner', width: "150",
         renderCell: (params) => (
-            <Tooltip title={params.value} >
+            <Tooltip title={params.value? params.value : ''} >
                 <span className="table-cell-trucate">{params.value}</span>
             </Tooltip>
         ),
@@ -45,7 +45,7 @@ const headers = [
     {
         field: 'ownerEmail', headerName: "Email", width: "200",
         renderCell: (params) => (
-            <Tooltip title={params.value} >
+            <Tooltip title={params.value? params.value : ''} >
                 <span className="table-cell-trucate">{params.value}</span>
             </Tooltip>
         ),
@@ -53,7 +53,7 @@ const headers = [
     {
         field: 'createdAt', headerName: "Created Date", width: "120",
         renderCell: (params) => (
-            <Tooltip title={params.value} >
+            <Tooltip title={params.value? params.value : ''} >
                 <span className="table-cell-trucate">{params.value}</span>
             </Tooltip>
         ),
@@ -61,7 +61,7 @@ const headers = [
     {
         field: 'updatedAt', headerName: "Updated Date", width: "120",
         renderCell: (params) => (
-            <Tooltip title={params.value} >
+            <Tooltip title={params.value? params.value : ''} >
                 <span className="table-cell-trucate">{params.value}</span>
             </Tooltip>
         ),
