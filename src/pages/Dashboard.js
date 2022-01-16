@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import headers from '../components/tableHeaders/CourseTableHeader';
 import SearchBar from "../components/SearchBar";
+import DateSortOrder from "../components/DateSortOrder";
 
 export default function Courses() {
   const [data, setData] = useState([]);
@@ -42,18 +43,12 @@ export default function Courses() {
     }
   }, [refetchData])
 
-  const handleSearch = (e) => {
-    console.log(e.target.value);
-    let newParams = params;
-    newParams["name"] = e.target.value;
-    setParams(newParams);
-    setRefetchData(!refetchData);
-  }
 
   return (
 
     <div style={{ padding: '40px' }}>
-      <SearchBar handleSearch={handleSearch}></SearchBar>
+      <SearchBar params={params} setParams={setParams} refetchData={refetchData} setRefetchData={setRefetchData}></SearchBar>
+      <DateSortOrder params={params} setParams={setParams} refetchData={refetchData} setRefetchData={setRefetchData} />
       <DataGrid
         autoHeight
         scrollbarSize={5}
