@@ -1,9 +1,11 @@
 import { Tooltip } from "@mui/material";
+import DataGridLockComponent from "../DataGridLockComponent";
+import DataGridMappingComponent from "../DataGridMappingComponent";
 
 const headers = [
-    { field: 'id', width: "30" },
+    { field: 'id', width: "20" },
     {
-        field: 'name', headerName: "Course name", width: "300",
+        field: 'email', headerName: "Email", width: "200",
         renderCell: (params) => (
             <Tooltip title={params.value? params.value : ''} >
                 <span className="table-cell-trucate">{params.value}</span>
@@ -11,7 +13,7 @@ const headers = [
         ),
     },
     {
-        field: 'room',
+        field: 'username', headerName: "Username", width: "100",
         renderCell: (params) => (
             <Tooltip title={params.value? params.value : ''} >
                 <span className="table-cell-trucate">{params.value}</span>
@@ -19,7 +21,7 @@ const headers = [
         ),
     },
     {
-        field: 'section',
+        field: 'firstName', headerName: "First Name", width: "100",
         renderCell: (params) => (
             <Tooltip title={params.value? params.value : ''} >
                 <span className="table-cell-trucate">{params.value}</span>
@@ -27,7 +29,7 @@ const headers = [
         ),
     },
     {
-        field: 'username', width: "120",
+        field: 'lastName', headerName: "Last Name", width: "100",
         renderCell: (params) => (
             <Tooltip title={params.value? params.value : ''} >
                 <span className="table-cell-trucate">{params.value}</span>
@@ -35,7 +37,23 @@ const headers = [
         ),
     },
     {
-        field: 'owner', width: "150",
+        field: 'isLocked', headerName: "Status", width: "130",
+        renderCell: (params) => (
+            <Tooltip title={params.value? params.value : ''} >
+                <DataGridLockComponent params={params} />
+            </Tooltip>
+        ),
+    },
+    {
+        field: 'isMapping', headerName: "Map Student ID", width: "130",
+        renderCell: (params) => (
+            <Tooltip title={params.value? params.value : ''} >
+                <DataGridMappingComponent params={params} />
+            </Tooltip>
+        ),
+    },
+    {
+        field: 'phone', headerName: "Phone", width: "110",
         renderCell: (params) => (
             <Tooltip title={params.value? params.value : ''} >
                 <span className="table-cell-trucate">{params.value}</span>
@@ -43,7 +61,31 @@ const headers = [
         ),
     },
     {
-        field: 'ownerEmail', headerName: "Email", width: "200",
+        field: 'studentID', headerName: "Student ID", width: "100",
+        renderCell: (params) => (
+            <Tooltip title={params.value? params.value : ''} >
+                <span className="table-cell-trucate">{params.value}</span>
+            </Tooltip>
+        ),
+    },
+    {
+        field: 'birthday', headerName: "Brithday", width: "80",
+        renderCell: (params) => (
+            <Tooltip title={params.value? params.value : ''} >
+                <span className="table-cell-trucate">{params.value}</span>
+            </Tooltip>
+        ),
+    },
+    {
+        field: 'school', headerName: "School", width: "100",
+        renderCell: (params) => (
+            <Tooltip title={params.value? params.value : ''} >
+                <span className="table-cell-trucate">{params.value}</span>
+            </Tooltip>
+        ),
+    },
+    {
+        field: 'address', headerName: "Address", width: "200",
         renderCell: (params) => (
             <Tooltip title={params.value? params.value : ''} >
                 <span className="table-cell-trucate">{params.value}</span>
@@ -66,6 +108,7 @@ const headers = [
             </Tooltip>
         ),
     },
+    
 ]
 
 export default headers;

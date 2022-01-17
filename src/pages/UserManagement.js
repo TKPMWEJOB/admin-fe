@@ -1,16 +1,17 @@
 import { DataGrid } from "@mui/x-data-grid"
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
-import headers from '../components/tableHeaders/CourseTableHeader';
+import headers from '../components/tableHeaders/UserTableHeader';
 import SearchBar from "../components/SearchBar";
 import DateSortOrder from "../components/DateSortOrder";
 import { UserContext } from '../contexts/UserContext'
 
 export default function Users() {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [params, setParams] = useState({
     name: "",
-    order: "DESC"
+    order: "ASC"
   })
   const [refetchData, setRefetchData] = useState(false);
   const { userInfo, updateUser } = useContext(UserContext);
@@ -18,33 +19,39 @@ export default function Users() {
   useEffect(async () => {
     if (!userInfo.isLogin)
       return;
-      
+    setLoading(true);
     try {
-      const res = await axios.get(`${process.env.REACT_APP_API_URL}/admin/courses`,
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/admin/users`,
         {
           params: params
         });
 
       const data = res.data.rows;
       console.log(data);
-      const courses = data.map((row) => {
-        const ownerName = `${row.owner.firstName ? row.owner.firstName : ''} ${row.owner.lastName ? row.owner.lastName : ''}`
-        let course = {
+      const users = data.map((row) => {
+        let user = {
           id: row.id,
-          name: row.name,
-          room: row.room,
-          section: row.section,
+          email: row.email,
           username: row.username,
-          owner: ownerName,
-          ownerId: row.ownerId,
-          ownerEmail: row.owner.email,
-          createdAt: new Date(row.createdAt).toString(),
-          updatedAt: new Date(row.updatedAt).toString(),
+          firstName: row.firstName,
+          lastName: row.lastName,
+          phone: row.phone,
+          address: row.address,
+          studentID: row.studentID,
+          birthday: row.birthday ? (new Date(row.birthday)).toLocaleDateString() : null,
+          school: row.school,
+          gender: row.gender,
+          createdAt: (new Date(row.createdAt)).toLocaleString(),
+          updatedAt: (new Date(row.updatedAt)).toLocaleString(),
+          isLocked: row.isLocked,
+          isMapping: row.isMapping,
         }
-        return course;
+        return user;
       })
-      setData(courses);
+      setData(users);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       if (error.response?.status === 401) {
         updateUser(false, null);
       }
@@ -56,13 +63,14 @@ export default function Users() {
     <>
       { userInfo.isLogin ?
           <div style={{ padding: '40px' }}>
-            <SearchBar params={params} setParams={setParams} refetchData={refetchData} setRefetchData={setRefetchData}></SearchBar>
+            <SearchBar params={params} setParams={setParams} refetchData={refetchData} setRefetchData={setRefetchData} />
             <DateSortOrder params={params} setParams={setParams} refetchData={refetchData} setRefetchData={setRefetchData} />
             <DataGrid
               autoHeight
               scrollbarSize={5}
               columns={headers}
               rows={data}
+              loading={loading}
               />
 
           </div>

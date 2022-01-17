@@ -10,7 +10,7 @@ export default function Courses() {
   const [data, setData] = useState([]);
   const [params, setParams] = useState({
     name: "",
-    order: "DESC"
+    order: "ASC"
   })
   const [refetchData, setRefetchData] = useState(false);
   const { userInfo, updateUser } = useContext(UserContext);
@@ -49,7 +49,7 @@ export default function Courses() {
         updateUser(false, null);
       }
     }
-  }, [refetchData])
+  }, [refetchData, userInfo])
 
 
   return (
