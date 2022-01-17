@@ -1,9 +1,10 @@
 import { DataGrid } from "@mui/x-data-grid"
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import headers from '../components/tableHeaders/CourseTableHeader';
 import SearchBar from "../components/SearchBar";
 import DateSortOrder from "../components/DateSortOrder";
+import { UserContext } from '../contexts/UserContext'
 
 export default function Courses() {
   const [data, setData] = useState([]);
@@ -11,9 +12,13 @@ export default function Courses() {
     name: "",
     order: "DESC"
   })
-
   const [refetchData, setRefetchData] = useState(false);
+  const { userInfo, updateUser } = useContext(UserContext);
+
   useEffect(async () => {
+    if (!userInfo.isLogin)
+      return;
+      
     try {
       const res = await axios.get(`${process.env.REACT_APP_API_URL}/admin/courses`,
         {
@@ -40,22 +45,30 @@ export default function Courses() {
       })
       setData(courses);
     } catch (error) {
+      if (error.response?.status === 401) {
+        updateUser(false, null);
+      }
     }
   }, [refetchData])
 
 
   return (
+    <>
+      { userInfo.isLogin ?
+          <div style={{ padding: '40px' }}>
+            <SearchBar params={params} setParams={setParams} refetchData={refetchData} setRefetchData={setRefetchData}></SearchBar>
+            <DateSortOrder params={params} setParams={setParams} refetchData={refetchData} setRefetchData={setRefetchData} />
+            <DataGrid
+              autoHeight
+              scrollbarSize={5}
+              columns={headers}
+              rows={data}
+              />
 
-    <div style={{ padding: '40px' }}>
-      <SearchBar params={params} setParams={setParams} refetchData={refetchData} setRefetchData={setRefetchData}></SearchBar>
-      <DateSortOrder params={params} setParams={setParams} refetchData={refetchData} setRefetchData={setRefetchData} />
-      <DataGrid
-        autoHeight
-        scrollbarSize={5}
-        columns={headers}
-        rows={data}
-      />
-
-    </div>
+          </div>
+        :
+        <h1>Please login to continue!</h1>
+      }
+    </>
   )
 }
