@@ -5,15 +5,17 @@ import headers from '../components/tableHeaders/CourseTableHeader';
 import SearchBar from "../components/SearchBar";
 import DateSortOrder from "../components/DateSortOrder";
 
-export default function Courses() {
+export default function Courses({ setTitle }) {
   const [data, setData] = useState([]);
   const [params, setParams] = useState({
     name: "",
     order: "DESC"
   })
 
+
   const [refetchData, setRefetchData] = useState(false);
   useEffect(async () => {
+    setTitle("Dashboard");
     try {
       const res = await axios.get(`${process.env.REACT_APP_API_URL}/admin/courses`,
         {

@@ -85,6 +85,7 @@ const menuItems = [
 function App() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [title, setTitle] = React.useState("");
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -96,7 +97,6 @@ function App() {
 
   return (
     <Router>
-      {/* <Layout></Layout> */}
       <AppBar position="fixed" open={open}>
         <Toolbar>
           <IconButton
@@ -109,7 +109,7 @@ function App() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Persistent drawer
+            {title}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -152,9 +152,9 @@ function App() {
       <div onClick={handleDrawerClose} style={{ top: '0', bottom: '0', left: '0', right: '0', position: 'absolute' }}>
         <DrawerHeader />
         <Routes>
-          <Route exact path="/" element={<Courses />} />
-          <Route path="/admins" element={<Admins />} />
-          <Route path="/users" element={<Users />} />
+          <Route exact path="/" element={<Courses setTitle={setTitle} />} />
+          <Route path="/admins" element={<Admins setTitle={setTitle} />} />
+          <Route path="/users" element={<Users setTitle={setTitle} />} />
         </Routes>
       </div>
     </Router>
