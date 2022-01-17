@@ -7,7 +7,7 @@ import DateSortOrder from "../components/DateSortOrder";
 
 import { Tooltip, Typography } from "@mui/material";
 import { IconButton } from "@mui/material";
-import SendIcon from "@mui/icons-material/Delete";
+import BanIcon from "@mui/icons-material/Block";
 
 export default function Users({ setTitle }) {
   const [data, setData] = useState([]);
@@ -48,20 +48,20 @@ export default function Users({ setTitle }) {
   }, [refetchData])
 
   const handleOpenDialogAction = () => {
-    console.log("add");
+    console.log("Ban");
   }
 
   const action = {
     field: 'actions',
     type: 'actions',
-    width: 120,
+    width: 40,
     sortable: false,
     disableClickEventBubbling: true,
     renderCell: () => {
       return (
-        <Tooltip title="Return all grades to student" arrow>
+        <Tooltip title="Ban user" arrow>
           <IconButton variant="contained" color="default" size="small" sx={{ ml: 10 }} onClick={handleOpenDialogAction}>
-            <SendIcon />
+            <BanIcon />
           </IconButton>
         </Tooltip>
       );
