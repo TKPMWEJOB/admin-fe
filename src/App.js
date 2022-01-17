@@ -20,7 +20,9 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import MailIcon from '@mui/icons-material/Mail';
+import CourseIcon from '@mui/icons-material/ImportContacts'
+import AdminIcon from '@mui/icons-material/AdminPanelSettings'
+import UserIcon from '@mui/icons-material/SupervisedUserCircle'
 
 import Courses from './pages/Dashboard';
 import Admins from './pages/AdminManagement';
@@ -64,18 +66,18 @@ const StyledLink = styled(Link)`
 
 const menuItems = [
   {
-    name: 'Courses',
-    icon: <MailIcon></MailIcon>,
+    name: 'Dashboard',
+    icon: <CourseIcon />,
     path: '/'
   },
   {
     name: 'User Management',
-    icon: <MailIcon></MailIcon>,
+    icon: <UserIcon />,
     path: '/users'
   },
   {
     name: 'Admin Management',
-    icon: <MailIcon></MailIcon>,
+    icon: <AdminIcon />,
     path: '/admins'
   }
 ]
