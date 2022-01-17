@@ -5,6 +5,7 @@ import headers from '../components/tableHeaders/UserTableHeader';
 import SearchBar from "../components/SearchBar";
 import DateSortOrder from "../components/DateSortOrder";
 import { UserContext } from '../contexts/UserContext'
+import { SnackbarContext } from "../contexts/SnackbarContext";
 
 export default function Users() {
   const [data, setData] = useState([]);
@@ -15,6 +16,7 @@ export default function Users() {
   })
   const [refetchData, setRefetchData] = useState(false);
   const { userInfo, updateUser } = useContext(UserContext);
+  const { handleOpenErrorSnack, handleOpenSuccessSnack, handleSetMsgSnack } = useContext(SnackbarContext);
 
   useEffect(async () => {
     if (!userInfo.isLogin)
@@ -55,8 +57,10 @@ export default function Users() {
       if (error.response?.status === 401) {
         updateUser(false, null);
       }
+      handleOpenErrorSnack(true);
+      handleSetMsgSnack(error.response.data.message);
     }
-  }, [refetchData])
+  }, [refetchData, userInfo])
 
 
   return (

@@ -10,28 +10,12 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import { FormControlLabel, Checkbox, Typography, Grid} from '@mui/material';
-import { SnackbarContext } from '../../contexts/SnackbarContext';
+import { SnackbarContext } from '../../contexts/SnackbarContext'
 import axios from 'axios';
-import ActivateAccountDialog from './ActivateAccountDialog';
 
-export default function SignupDialog({ open, dialogTitle, handleClose}) {
+export default function SignupDialog({ open, dialogTitle, handleClose, setRefetchData }) {
     const [loading, setLoading] = React.useState(false);
-    const [disabled, setDisabled] = useState(true);
-    const [email, setEmail] = useState("");
-    const [openActivate, setOpenActivate] = React.useState(false);
     const { handleOpenErrorSnack, handleOpenSuccessSnack, handleSetMsgSnack } = useContext(SnackbarContext);
-
-    function handleDisabled() {
-        setDisabled(!disabled);
-    }
-
-    const handleCreateActivate = () => {
-        setOpenActivate(true);
-      };
-    
-    const handleCloseActivate = () => {
-        setOpenActivate(false);
-    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -44,7 +28,7 @@ export default function SignupDialog({ open, dialogTitle, handleClose}) {
         }
 
         try {
-            let res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/signup`, {
+            let res = await axios.post(`${process.env.REACT_APP_API_URL}/admin/admin-account`, {
                 email: e.target.email.value,
                 username: e.target.username.value,
                 password: e.target.password.value,
@@ -52,14 +36,14 @@ export default function SignupDialog({ open, dialogTitle, handleClose}) {
                 lastName: e.target.lastName.value,
             });
             console.log(res);
-            setEmail(e.target.email.value);
             handleSetMsgSnack(res.data.msg);
             handleOpenSuccessSnack(true);
             setLoading(false);
+            setRefetchData(true);
             setTimeout(() => {  
                 console.log(res);
                 setLoading(false);
-                handleCreateActivate();
+                handleClose();
             }, 1500);
         } catch(error) {
             const { response } = error;
@@ -119,7 +103,6 @@ export default function SignupDialog({ open, dialogTitle, handleClose}) {
             rePassword: Yup.string()
                 .oneOf([Yup.ref("password")], "Password's not match")
                 .required("Required!"),
-            checkbox: Yup.boolean().required("Required!"),
         })
     };
 
@@ -232,13 +215,6 @@ export default function SignupDialog({ open, dialogTitle, handleClose}) {
                                 error={props.touched.rePassword && Boolean(props.errors.rePassword)}
                                 helperText={<ErrorMessage name="rePassword" />}
                             />
-                            
-                            <Field 
-                                control={<Checkbox color="primary" />}
-                                label={<Typography variant="body1">I accept the terms and conditions, as well as the privacy policy</Typography>}
-                                as={FormControlLabel}
-                                onChange={handleDisabled}
-                            />
                         </DialogContent>
                         <DialogActions>
                             <Button 
@@ -258,16 +234,14 @@ export default function SignupDialog({ open, dialogTitle, handleClose}) {
                                 variant="contained"
                                 color="primary"
                                 size="large"
-                                sx={{margin: 2}}                    
-                                disabled={disabled}
-                                >
+                                sx={{margin: 2}} 
+                            >
                                 Sign up
                             </LoadingButton>
                         </DialogActions>
                     </form>
                 )}
             </Formik>
-            <ActivateAccountDialog open={openActivate} email={email} handleClose={handleCloseActivate} handleCloseSignup={handleClose} />
         </Dialog>
     );
 }

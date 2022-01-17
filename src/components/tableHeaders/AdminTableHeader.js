@@ -45,14 +45,6 @@ const headers = [
         ),
     },
     {
-        field: 'isMapping', headerName: "Map Student ID", width: "130",
-        renderCell: (params) => (
-            <Tooltip title={params.value? params.value : ''} >
-                <DataGridMappingComponent params={params} />
-            </Tooltip>
-        ),
-    },
-    {
         field: 'phone', headerName: "Phone", width: "110",
         renderCell: (params) => (
             <Tooltip title={params.value? params.value : ''} >
@@ -61,23 +53,7 @@ const headers = [
         ),
     },
     {
-        field: 'studentID', headerName: "Student ID", width: "100",
-        renderCell: (params) => (
-            <Tooltip title={params.value? params.value : ''} >
-                <span className="table-cell-trucate">{params.value}</span>
-            </Tooltip>
-        ),
-    },
-    {
         field: 'birthday', headerName: "Brithday", width: "80",
-        renderCell: (params) => (
-            <Tooltip title={params.value? params.value : ''} >
-                <span className="table-cell-trucate">{params.value}</span>
-            </Tooltip>
-        ),
-    },
-    {
-        field: 'school', headerName: "School", width: "100",
         renderCell: (params) => (
             <Tooltip title={params.value? params.value : ''} >
                 <span className="table-cell-trucate">{params.value}</span>
