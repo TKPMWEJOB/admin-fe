@@ -60,7 +60,7 @@ export default function Users({ setTitle }) {
     renderCell: () => {
       return (
         <Tooltip title="Ban user" arrow>
-          <IconButton variant="contained" color="default" size="small" sx={{ ml: 10 }} onClick={handleOpenDialogAction}>
+          <IconButton variant="contained" color="default" size="small" onClick={handleOpenDialogAction}>
             <BanIcon />
           </IconButton>
         </Tooltip>
