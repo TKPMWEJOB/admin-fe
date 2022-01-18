@@ -6,8 +6,9 @@ import SearchBar from "../components/SearchBar";
 import DateSortOrder from "../components/DateSortOrder";
 import { UserContext } from '../contexts/UserContext'
 
-export default function Courses() {
+export default function Courses({ setTitle }) {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [params, setParams] = useState({
     name: "",
     order: "ASC"
@@ -18,7 +19,7 @@ export default function Courses() {
   useEffect(async () => {
     if (!userInfo.isLogin)
       return;
-      
+    setLoading(true);
     try {
       const res = await axios.get(`${process.env.REACT_APP_API_URL}/admin/courses`,
         {
@@ -43,8 +44,10 @@ export default function Courses() {
         }
         return course;
       })
+      setLoading(false);
       setData(courses);
     } catch (error) {
+      setLoading(false);
       if (error.response?.status === 401) {
         updateUser(false, null);
       }
@@ -63,7 +66,8 @@ export default function Courses() {
               scrollbarSize={5}
               columns={headers}
               rows={data}
-              />
+              loading={loading}
+            />
 
           </div>
         :
